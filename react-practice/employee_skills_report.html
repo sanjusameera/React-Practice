@@ -1,0 +1,362 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Skills Report</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f5f6fa;
+    margin:0;
+    padding:30px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    padding:25px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+h2{
+    margin:0;
+}
+
+.btn{
+    padding:8px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-left:5px;
+}
+
+.btn-secondary{
+    background:#4f46e5;
+    color:white;
+}
+
+.btn-light{
+    background:#e5e7eb;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-bottom:20px;
+}
+
+select{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:5px;
+    width:100%;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    white-space:nowrap;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    text-align:left;
+}
+
+th{
+    background:#f8fafc;
+    cursor:pointer;
+    user-select:none;
+}
+
+th:hover{
+    background:#e2e8f0;
+}
+
+.sort-icon{
+    opacity:.4;
+    font-size:12px;
+}
+
+.sort-asc .sort-icon::after{
+    content:" ▲";
+    opacity:1;
+}
+
+.sort-desc .sort-icon::after{
+    content:" ▼";
+    opacity:1;
+}
+
+th:not(.sort-asc):not(.sort-desc) .sort-icon::after{
+    content:" ⇅";
+}
+
+.badge{
+    padding:5px 10px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.info{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+.cert-btn{
+    padding:5px 10px;
+    background:#f3f4f6;
+    border-radius:5px;
+    text-decoration:none;
+    color:black;
+    font-size:13px;
+}
+
+.truncate{
+    max-width:140px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="header">
+    <h2>Employee Skills Report</h2>
+
+    <div>
+        <button class="btn btn-secondary">Export Excel</button>
+        <button class="btn btn-light">Export CSV</button>
+    </div>
+</div>
+
+<div class="filters">
+    <select>
+        <option>All Employees</option>
+    </select>
+
+    <select>
+        <option>All Departments</option>
+    </select>
+
+    <select>
+        <option>All Designations</option>
+    </select>
+
+    <select>
+        <option>All Skills</option>
+    </select>
+
+    <select>
+        <option>All Categories</option>
+    </select>
+
+    <select>
+        <option>All Statuses</option>
+    </select>
+</div>
+
+<div class="table-container">
+
+<table class="report-table">
+
+<thead>
+<tr>
+<th class="sortable" data-col="0">Employee ID<span class="sort-icon"></span></th>
+<th class="sortable" data-col="1">Employee Name<span class="sort-icon"></span></th>
+<th class="sortable" data-col="2">Department<span class="sort-icon"></span></th>
+<th class="sortable" data-col="3">Designation<span class="sort-icon"></span></th>
+<th class="sortable" data-col="4">Skill<span class="sort-icon"></span></th>
+<th class="sortable" data-col="5">Category<span class="sort-icon"></span></th>
+<th class="sortable" data-col="6">Proficiency<span class="sort-icon"></span></th>
+<th class="sortable" data-col="7">Valid From<span class="sort-icon"></span></th>
+<th class="sortable" data-col="8">Expiry Date<span class="sort-icon"></span></th>
+<th class="sortable" data-col="9">Status<span class="sort-icon"></span></th>
+<th class="sortable" data-col="10">Certificate<span class="sort-icon"></span></th>
+<th class="sortable" data-col="11">Created At<span class="sort-icon"></span></th>
+<th class="sortable" data-col="12">Modified At<span class="sort-icon"></span></th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>EMP001</td>
+<td>John Smith</td>
+<td>IT</td>
+<td>Developer</td>
+<td>Python</td>
+<td>Technical</td>
+<td>Expert</td>
+<td>2024-01-10</td>
+<td>2027-01-10</td>
+<td data-sort="active"><span class="badge success">Active</span></td>
+<td><a href="#" class="cert-btn">AWS.pdf</a></td>
+<td>2024-01-01 10:30</td>
+<td>2024-02-10 15:45</td>
+</tr>
+
+<tr>
+<td>EMP002</td>
+<td>Mary Johnson</td>
+<td>HR</td>
+<td>Manager</td>
+<td>Communication</td>
+<td>Non Technical</td>
+<td>Advanced</td>
+<td>2023-05-12</td>
+<td>2025-05-12</td>
+<td data-sort="expired"><span class="badge danger">Expired</span></td>
+<td><a href="#" class="cert-btn">HR.pdf</a></td>
+<td>2023-04-20 11:15</td>
+<td>2024-03-22 16:00</td>
+</tr>
+
+<tr>
+<td>EMP003</td>
+<td>David Wilson</td>
+<td>Finance</td>
+<td>Analyst</td>
+<td>Excel</td>
+<td>Technical</td>
+<td>Intermediate</td>
+<td>2025-01-01</td>
+<td>—</td>
+<td data-sort="no expiry"><span class="badge info">No Expiry</span></td>
+<td>—</td>
+<td>2025-01-03 08:30</td>
+<td>2025-04-01 12:45</td>
+</tr>
+
+<tr>
+<td>EMP004</td>
+<td>Sarah Brown</td>
+<td>IT</td>
+<td>Software Engineer</td>
+<td>JavaScript</td>
+<td>Technical</td>
+<td>Expert</td>
+<td>2024-03-20</td>
+<td>2026-03-20</td>
+<td data-sort="active"><span class="badge success">Active</span></td>
+<td><a href="#" class="cert-btn">JS.pdf</a></td>
+<td>2024-03-22 09:15</td>
+<td>2024-06-11 14:10</td>
+</tr>
+
+</tbody>
+
+</table>
+</div>
+</div>
+
+<script>
+(function () {
+
+const tbody = document.querySelector("tbody");
+const headers = document.querySelectorAll(".sortable");
+
+let lastCol=-1;
+let asc=true;
+
+function getCell(row,col){
+    const td=row.querySelectorAll("td")[col];
+    return (td.dataset.sort || td.innerText || "")
+        .trim()
+        .toLowerCase();
+}
+
+headers.forEach(th=>{
+
+    th.addEventListener("click",()=>{
+
+        const col=parseInt(th.dataset.col);
+
+        asc=(lastCol===col)?!asc:true;
+        lastCol=col;
+
+        headers.forEach(h=>{
+            h.classList.remove("sort-asc","sort-desc");
+        });
+
+        th.classList.add(
+            asc?"sort-asc":"sort-desc"
+        );
+
+        const rows=
+            Array.from(
+                tbody.querySelectorAll("tr")
+            );
+
+        rows.sort((a,b)=>{
+
+            const va=getCell(a,col);
+            const vb=getCell(b,col);
+
+            const da=Date.parse(va);
+            const db=Date.parse(vb);
+
+            let cmp;
+
+            if(!isNaN(da)&&!isNaN(db)){
+                cmp=da-db;
+            }
+            else{
+                const na=parseFloat(va);
+                const nb=parseFloat(vb);
+
+                if(!isNaN(na)&&!isNaN(nb)){
+                    cmp=na-nb;
+                }
+                else{
+                    cmp=va.localeCompare(vb);
+                }
+            }
+
+            return asc?cmp:-cmp;
+        });
+
+        rows.forEach(r=>tbody.appendChild(r));
+    });
+});
+
+})();
+</script>
+
+</body>
+</html>
+```
